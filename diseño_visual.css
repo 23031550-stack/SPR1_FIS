@@ -1,0 +1,277 @@
+/* =====================================================
+   MY UGLY SWEATER - Estilos
+   ===================================================== */
+
+/* ---------- 1. VARIABLES DE COLOR ---------- */
+:root {
+  --azul:     #1b2a4a;   
+  --lana:     #f7f1e3;   
+  --lana-2:   #ecdfc4;   
+  --hilo:     #a8976f;   
+  --rojo:     #c8102e;
+  --verde:    #1f6b4a;
+  --mostaza:  #e0a526;   
+  --texto:    #22304d;
+  --suave:    #6a6550;   
+  
+  /* Cinta SVG de fondo */
+  --cinta: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='68' height='34'%3E%3Crect width='68' height='34' fill='%23c8102e'/%3E%3Cpath d='M17 5L29 17L17 29L5 17Z' fill='%23f7f1e3'/%3E%3Cpath d='M17 11L23 17L17 23L11 17Z' fill='%231f6b4a'/%3E%3Cpath d='M51 5L63 17L51 29L39 17Z' fill='%23f7f1e3'/%3E%3Cpath d='M51 11L57 17L51 23L45 17Z' fill='%231f6b4a'/%3E%3Ccircle cx='34' cy='17' r='3' fill='%23e0a526'/%3E%3C/svg%3E");
+}
+
+* { 
+  box-sizing: border-box; 
+}
+
+
+/* ---------- 2. ESTILOS GENERALES Y FONDO ---------- */
+body {
+  margin: 0;
+  font-family: "Fredoka", system-ui, sans-serif;
+  color: var(--texto);
+  background-color: var(--azul);
+  background-image:
+    radial-gradient(circle, #fff 1.4px, transparent 1.8px),
+    radial-gradient(circle, rgba(255,255,255,.55) 1px, transparent 1.5px);
+  background-size: 90px 90px, 53px 53px;
+  background-position: 0 0, 27px 40px;
+}
+
+/* Cintas superior e inferior */
+.ribbon {
+  height: 34px;
+  background: var(--cinta) 0 0 / 68px 34px;
+  border-block: 3px dashed var(--lana);
+}
+
+
+/* ---------- 3. ENCABEZADO (ETIQUETA) ---------- */
+header {
+  display: flex;
+  justify-content: center;
+  padding: 18px 16px 4px;
+}
+
+.label {
+  position: relative;
+  margin-top: 6px;
+  padding: 12px 34px 12px 54px;
+  background: var(--lana);
+  border-radius: 12px 40px 40px 12px;
+  transform: rotate(-2deg);
+  outline: 2px dashed var(--hilo);
+  outline-offset: -7px;
+  box-shadow: 0 6px 0 rgba(0,0,0,.25);
+}
+
+.label h1 {
+  margin: 0;
+  font-size: 1.5rem;
+  line-height: 1.1;
+  color: var(--rojo);
+}
+
+.label span {
+  font-size: .8rem;
+  color: var(--suave);
+}
+
+/* Agujero y hilo de la etiqueta */
+.label::before {
+  content: "";
+  position: absolute;
+  left: 16px; top: 50%;
+  width: 18px; height: 18px;
+  margin-top: -9px;
+  border-radius: 50%;
+  background: var(--azul);
+  box-shadow: inset 0 0 0 3px var(--mostaza);
+}
+
+.label::after {
+  content: "";
+  position: absolute;
+  left: 25px; top: -26px;
+  width: 2px; height: 22px;
+  background: var(--lana);
+  transform: rotate(18deg);
+  transform-origin: bottom;
+}
+
+
+/* ---------- 4. ESTRUCTURA PRINCIPAL (GRID) ---------- */
+.app {
+  display: grid;
+  grid-template-columns: 310px 1fr;
+  gap: 18px;
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 18px 16px 24px;
+}
+
+/* Paneles con efecto de costura */
+aside, main {
+  padding: 20px;
+  background: var(--lana);
+  border-radius: 22px;
+  outline: 2px dashed var(--hilo);
+  outline-offset: -9px;
+  box-shadow: 0 8px 0 rgba(0,0,0,.28);
+}
+
+main {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  min-width: 0;
+}
+
+h2 {
+  margin: 15px 0 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--verde);
+}
+
+
+/* ---------- 5. BOTONES Y SELECTORES ---------- */
+.opts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 9px;
+}
+
+button, select {
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+}
+
+/* Botones de parches */
+.opt {
+  min-width: 46px;
+  min-height: 42px;
+  padding: 8px 14px;
+  font-weight: 500;
+  background: var(--lana-2);
+  border: 2px dashed var(--hilo);
+  border-radius: 12px;
+}
+
+.opt.active, .opt[aria-pressed="true"] {
+  font-weight: 700;
+  background: var(--mostaza);
+  border: 3px dashed #6b4a00;
+}
+
+/* Selector de tallas */
+select {
+  width: 100%;
+  padding: 10px;
+  background: var(--lana-2);
+  border: 2px dashed var(--hilo);
+  border-radius: 12px;
+  font-weight: 600;
+  margin-bottom: 15px;
+}
+
+select:focus { 
+  border-color: var(--rojo); 
+  outline: none; 
+}
+
+/* Botón de compra */
+.buy-btn {
+  width: 100%;
+  padding: 14px;
+  background: var(--rojo);
+  color: #fff;
+  border: none;
+  border-radius: 14px;
+  font-weight: bold;
+  font-size: 1.1rem;
+  outline: 2px dashed var(--lana);
+  outline-offset: -6px;
+  box-shadow: 0 4px 0 #7d0a1c;
+  margin-top: auto;
+  transition: transform 0.1s;
+}
+
+.buy-btn:active { 
+  transform: translateY(4px); 
+  box-shadow: none; 
+}
+
+
+/* ---------- 6. VISTA PREVIA 3D Y DECORACIONES ---------- */
+/* Foquitos navideños */
+.lights {
+  display: flex;
+  justify-content: space-around;
+  align-items: flex-start;
+  height: 28px;
+  margin: -6px 8px -4px;
+  border-top: 2px solid var(--hilo);
+  border-radius: 0 0 50% 50% / 0 0 100% 100%;
+}
+
+.lights i {
+  width: 14px; height: 20px;
+  margin-top: 2px;
+  border-radius: 50% 50% 55% 55%;
+  background: currentColor;
+  box-shadow: 0 0 10px currentColor;
+}
+
+/* Escenario del modelo */
+.stage {
+  position: relative;
+  min-height: 440px;
+  background: radial-gradient(circle at 50% 42%, #fffdf6 0, #eadfc6 80%);
+  border: 3px solid var(--lana-2);
+  border-radius: 18px;
+  overflow: hidden;
+}
+
+/* Contenedor de Three.js */
+#canvas-container {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0; left: 0;
+  cursor: grab;
+}
+
+#canvas-container:active { 
+  cursor: grabbing; 
+}
+
+/* Etiquetas dentro de la vista previa */
+.tag, .hint {
+  position: absolute;
+  font-size: .85rem;
+  color: var(--suave);
+  pointer-events: none;
+  z-index: 10;
+}
+
+.tag  { top: 12px; left: 14px; }
+.hint { bottom: 10px; right: 14px; font-size: .78rem; }
+
+
+/* ---------- 7. MENSAJES DE VALIDACIÓN ---------- */
+#msg {
+  min-height: 1.4em;
+  margin: 0;
+  font-weight: 600;
+  text-align: center;
+}
+
+#msg.err { color: var(--rojo); }
+#msg.ok  { color: var(--verde); }
+
+
+/* ---------- 8. RESPONSIVE (MÓVILES) ---------- */
+@media (max-width: 780px) {
+  .app { grid-template-columns: 1fr; }
+  .stage { min-height: 360px; }
+}

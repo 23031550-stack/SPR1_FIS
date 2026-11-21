@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>My Ugly Sweater - 3D</title>
+  
+  <!-- Fuente de Google Fonts -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&display=swap">
+  <!-- Hoja de estilos principal -->
+  <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+
+  <!-- ========================================== -->
+  <!-- CINTA DECORATIVA SUPERIOR -->
+  <!-- ========================================== -->
+  <div class="ribbon"></div>
+
+  <!-- ========================================== -->
+  <!-- ENCABEZADO (ETIQUETA DE ROPA) -->
+  <!-- ========================================== -->
+  <header>
+    <div class="label">
+      <h1>My Ugly Sweater</h1>
+      <span>Macy’s · 3D Experience</span>
+    </div>
+  </header>
+
+  <!-- ========================================== -->
+  <!-- CONTENEDOR PRINCIPAL (LAYOUT) -->
+  <!-- ========================================== -->
+  <div class="app">
+    
+    <!-- PANEL IZQUIERDO: MENÚ DE OPCIONES -->
+    <aside>
+      
+      <!-- Selección de Modelo -->
+      <section>
+        <h2>1. Modelo 3D</h2>
+        <div class="opts" id="modelos">
+          <button class="opt active" onclick="cargarModelo('sweater', this)">Suéter Clásico</button>
+        </div>
+      </section>
+
+      <!-- Selección de Textura -->
+      <section>
+        <h2>2. Patrón</h2>
+        <div class="opts" id="patrones">
+          <button class="opt active" onclick="aplicarTextura('renos', this)">Renos</button>
+          <button class="opt" onclick="aplicarTextura('copos', this)">Copos</button>
+        </div>
+      </section>
+
+      <!-- Selección de Talla (Validación) -->
+      <section>
+        <h2>3. Talla</h2>
+        <select id="talla-select">
+          <option value="">-- Elige una talla --</option>
+          <option value="CH">Chica (CH)</option>
+          <option value="M">Mediana (M)</option>
+          <option value="G">Grande (G)</option>
+        </select>
+      </section>
+
+      <!-- Botón de Compra y Mensaje de Validación -->
+      <button class="buy-btn" onclick="validarCompra()">Agregar al carrito - $45</button>
+      <p id="msg" role="status"></p>
+
+    </aside>
+
+    <!-- PANEL DERECHO: VISTA PREVIA 3D -->
+    <main>
+      
+      <!-- Luces decorativas navideñas -->
+      <div class="lights" id="lights"></div>
+
+      <!-- Escenario donde se renderiza Three.js -->
+      <div class="stage">
+        <div class="tag" id="tag">Vista previa 3D</div>
+        <div class="hint">Arrastra para girar</div>
+        
+        <!-- Contenedor inyectado por Three.js -->
+        <div id="canvas-container"></div>
+      </div>
+
+    </main>
+  </div>
+
+  <!-- ========================================== -->
+  <!-- CINTA DECORATIVA INFERIOR -->
+  <!-- ========================================== -->
+  <div class="ribbon"></div>
+
+  <!-- ========================================== -->
+  <!-- IMPORTACIÓN DE LIBRERÍAS Y SCRIPTS -->
+  <!-- ========================================== -->
+  <script type="importmap">
+    {
+      "imports": {
+        "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
+        "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
+      }
+    }
+  </script>
+  
+  <!-- Lógica de la aplicación -->
+  <script type="module" src="app.js"></script>
+  
+</body>
+</html>
