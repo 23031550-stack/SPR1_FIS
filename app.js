@@ -59,6 +59,7 @@ scene.add(modeloActual);
 // Función para el cambio de modelo (Preparada para expansión)
 let corteSeleccionado = null;
 
+// Función para el cambio de modelo (Preparada para expansión)
 window.cargarModelo = function(nombre, boton) {
     // Guarda únicamente el último modelo elegido
     corteSeleccionado = nombre;
@@ -125,7 +126,7 @@ window.validarCompra = function() {
         msg.textContent = `¡Excelente! ${corteSeleccionado} (Talla ${talla}) agregado al carrito.`;
         msg.className = "ok";  // Pinta el texto de verde
     }
-    
+   
 };
 
 /* =====================================================
