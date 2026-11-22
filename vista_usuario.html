@@ -55,10 +55,19 @@
           <button class="opt" onclick="aplicarTextura('copos', this)">Copos</button>
         </div>
       </section>
-
+      <section>
+        <!---seleccion de corte (validacion)-->
+      <h2>3. Corte</h2>
+        <div class="opts" id="modelos">
+  <button class="opt" onclick="cargarModelo('Suéter Clásico', this)">Suéter Clásico</button>
+  <button class="opt" onclick="cargarModelo('Cuello Alto', this)">Cuello Alto</button>
+  <button class="opt" onclick="cargarModelo('Cárdigan', this)">Cárdigan</button>
+  <button class="opt" onclick="cargarModelo('Con Cierre', this)">Con Cierre</button>
+</div>
+</section>
       <!-- Selección de Talla (Validación) -->
       <section>
-        <h2>3. Talla</h2>
+        <h2>4. Talla</h2>
         <select id="talla-select">
           <option value="">-- Elige una talla --</option>
           <option value="CH">Chica (CH)</option>

@@ -57,9 +57,22 @@ modeloActual = new THREE.Mesh(geometry, material);
 scene.add(modeloActual);
 
 // Función para el cambio de modelo (Preparada para expansión)
+let corteSeleccionado = null;
+
 window.cargarModelo = function(nombre, boton) {
+    // Guarda únicamente el último modelo elegido
+    corteSeleccionado = nombre;
+
+    // Resalta el botón seleccionado
     document.querySelectorAll('#modelos .opt').forEach(b => b.classList.remove('active'));
     boton.classList.add('active');
+
+    // Actualiza la vista previa conservando talla y patrón previos
+    const tag = document.getElementById('tag');
+    if (tag) {
+        tag.textContent = `Vista previa 3D: ${corteSeleccionado}`;
+    }
+
     modeloActual.material.color.setHex(0xc8102e);
 };
 
@@ -102,15 +115,18 @@ window.validarCompra = function() {
     const talla = document.getElementById('talla-select').value;
     const msg = document.getElementById('msg');
 
-    if (talla === "") {
+  if (!corteSeleccionado) {
+        msg.textContent = "Elige un modelo de suéter para continuar";
+        msg.className = "err"; // Pinta el texto de rojo
+    } else if (talla === "") {
         msg.textContent = "Elige una talla para continuar";
         msg.className = "err"; // Pinta el texto de rojo
     } else {
-        msg.textContent = "¡Excelente! Suéter agregado al carrito.";
+        msg.textContent = `¡Excelente! ${corteSeleccionado} (Talla ${talla}) agregado al carrito.`;
         msg.className = "ok";  // Pinta el texto de verde
     }
+    
 };
-
 
 /* =====================================================
    7. BUCLE DE ANIMACIÓN Y RESPONSIVIDAD
