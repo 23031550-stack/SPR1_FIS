@@ -38,23 +38,7 @@
     
     <!-- PANEL IZQUIERDO: MENÚ DE OPCIONES -->
     <aside>
-      
-      <!-- Selección de Modelo -->
-      <section>
-        <h2>1. Modelo 3D</h2>
-        <div class="opts" id="modelos">
-          <button class="opt active" onclick="cargarModelo('sweater', this)">Suéter Clásico</button>
-        </div>
-      </section>
 
-      <!-- Selección de Textura -->
-      <section>
-        <h2>2. Patrón</h2>
-        <div class="opts" id="patrones">
-          <button class="opt active" onclick="aplicarTextura('renos', this)">Renos</button>
-          <button class="opt" onclick="aplicarTextura('copos', this)">Copos</button>
-        </div>
-      </section>
       <section>
         <h2>1. Cortes </h2>
         <!-- ===Botones de tipos de suéter === -->
@@ -64,8 +48,8 @@
           <button class="opt" onclick="cargarModelo('Cárdigan', this)">Cárdigan</button>
           <button class="opt" onclick="cargarModelo('Con Cierre', this)">Con Cierre</button>
         </div>
-        
       </section>
+
       <!-- Selección de Talla (Validación) -->
       <section>
         <h2>4. Talla</h2>
@@ -78,7 +62,7 @@
       </section>
 
       <!-- Botón de Compra y Mensaje de Validación -->
-      <button class="buy-btn" onclick="validarCompra()">Agregar al carrito - $45</button>
+      <button class="buy-btn" onclick="validarCompra()">Agregar al carrito</button>
       <p id="msg" role="status"></p>
 
     </aside>
