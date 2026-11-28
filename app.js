@@ -1,6 +1,7 @@
 // Importación de las librerías de Three.js
 import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 
 /* =====================================================
    1. INICIALIZACIÓN DE LA INTERFAZ GRÁFICA (UI)
@@ -47,65 +48,107 @@ controls.enableDamping = true;
 
 
 /* =====================================================
-   4. CREACIÓN DEL MODELO 3D (Placeholder)
+   4. CREACIÓN DEL MODELO 3D
    ===================================================== */
-// NOTA: Aquí se usaría GLTFLoader para cargar el .glb real.
-let modeloActual;
-const geometry = new THREE.CylinderGeometry(1.2, 1.2, 2.5, 32);
-const material = new THREE.MeshStandardMaterial({ color: 0xc8102e, roughness: 0.7 });
-modeloActual = new THREE.Mesh(geometry, material);
-scene.add(modeloActual);
 
-// Función para el cambio de modelo (Preparada para expansión)
+let sweater_cardigan;
+let sweater_classic;
+let sweater_turtleneck;
+let sweater_zip;
+precargarModelos();
+
+let modeloActual = sweater_classic;
+let escala = 3.5;
+
 let corteSeleccionado = null;
 
 // Función para el cambio de modelo (Preparada para expansión)
 window.cargarModelo = function(nombre, boton) {
-    // Guarda únicamente el último modelo elegido
-    corteSeleccionado = nombre;
+    try {
+        // Guarda únicamente el último modelo elegido
+        corteSeleccionado = nombre;
 
-    // Resalta el botón seleccionado
-    document.querySelectorAll('#modelos .opt').forEach(b => b.classList.remove('active'));
-    boton.classList.add('active');
+        // Resalta el botón seleccionado
+        document.querySelectorAll('#modelos .opt').forEach(b => b.classList.remove('active'));
+        boton.classList.add('active');
 
-    // Actualiza la vista previa conservando talla y patrón previos
-    const tag = document.getElementById('tag');
-    if (tag) {
-        tag.textContent = `Vista previa 3D: ${corteSeleccionado}`;
+        scene.remove(modeloActual);
+
+        switch(nombre) {
+            case 'Suéter Clásico':
+                modeloActual = sweater_classic;
+                break;
+
+            case 'Cuello Alto':
+                modeloActual = sweater_turtleneck;
+                break;
+
+            case 'Cárdigan':
+                modeloActual = sweater_cardigan;
+                break;
+
+            case 'Con Cierre':
+                modeloActual = sweater_zip;
+                break;
+        }
+
+        modeloActual.scale.set(escala, escala, escala);
+        scene.add(modeloActual);
+
+        //mostrar nombre del corte
+        const tag = document.getElementById('tag');
+        if (tag) {
+            tag.textContent = `Vista previa 3D: ${corteSeleccionado}`;
+        }
+
+    } catch (error) {
+        const tag = document.getElementById('tag');
+        if (tag) {
+            tag.textContent = `Vista previa 3D`;
+        }
+
+        alert("No se pudo cargar el modelo.");
     }
 
-    modeloActual.material.color.setHex(0xc8102e);
+
+    //las texturas se cargan correctamente pero las coordenadas UV de los modelos necesitan ser ajustadas, ya que no están cargando correctamente la textura.
+    try {
+       //pruebaCargaTextura();
+    } catch (error) {
+        
+    }
 };
 
+function pruebaCargaTextura() {
+    const textureLoader = new THREE.TextureLoader();
+    const textura = textureLoader.load('texturas/plantilla.png');
 
-/* =====================================================
-   5. CARGA DE TEXTURAS CON CANVAS (Requisito del PDF)
-   ===================================================== */
-// Creamos un canvas oculto en memoria
-const canvasTexturas = document.createElement("canvas");
-canvasTexturas.width = 512; 
-canvasTexturas.height = 512;
-const ctx = canvasTexturas.getContext("2d");
-let canvasTexture = new THREE.CanvasTexture(canvasTexturas);
+    modeloActual.traverse((obj) => {
+        if (obj.isMesh) {
+            obj.material.map = textura;
+            obj.material.needsUpdate = true;
+        }
+    });
+}
 
-window.aplicarTextura = async function(patron, boton) {
-    // Actualizar el botón activo
-    document.querySelectorAll('#patrones .opt').forEach(b => b.classList.remove('active'));
-    boton.classList.add('active');
+function precargarModelos() {
+    const loader = new GLTFLoader();
+    
+    loader.load('modelos/sweater_cardigan.glb', (gltf) => {
+        sweater_cardigan = gltf.scene;
+    });
 
-    // 1. Pintamos el fondo del lienzo
-    ctx.fillStyle = patron === 'renos' ? '#c8102e' : '#1f6b4a';
-    ctx.fillRect(0, 0, 512, 512);
+    loader.load('modelos/sweater_classic.glb', (gltf) => {
+        sweater_classic = gltf.scene;
+    });
 
-    // 2. Dibujamos el diseño (Simulación de la textura)
-    ctx.fillStyle = '#fff';
-    ctx.font = "40px Arial";
-    ctx.fillText(patron === 'renos' ? '🦌 RENOS' : '❄️ COPOS', 100, 256);
+    loader.load('modelos/sweater_turtleneck.glb', (gltf) => {
+        sweater_turtleneck = gltf.scene;
+    });
 
-    // 3. Convertimos el Canvas en una textura de Three.js y la aplicamos
-    canvasTexture.needsUpdate = true;
-    modeloActual.material.map = canvasTexture;
-    modeloActual.material.needsUpdate = true;
+    loader.load('modelos/sweater_zip.glb', (gltf) => {
+        sweater_zip = gltf.scene;
+    });
 };
 
 
@@ -145,7 +188,5 @@ function animate() {
     controls.update(); // Necesario para el efecto de amortiguación
     renderer.render(scene, camera);
 }
-animate();
 
-// Ejecutar la textura inicial al cargar la página
-aplicarTextura('renos', document.querySelector('#patrones .opt'));
+animate();
